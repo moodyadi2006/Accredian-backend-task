@@ -42,13 +42,19 @@ export const createReferral = async (req, res) => {
       refereeName,
       courseName,
       refereeEmail,
-      message
+      message,
     });
 
-    if (!emailResponse.success || !emailReferredResponse.success) {
+    if (!emailResponse.success) {
       return res.json(
         { success: false, message: emailResponse.message },
-        { status: 500 }
+        { status: 402 }
+      );
+    }
+    if (!emailReferredResponse.success) {
+      return res.json(
+        { success: false, message: emailReferredResponse.message },
+        { status: 403 }
       );
     }
     return res.json({

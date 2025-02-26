@@ -30,6 +30,12 @@ export async function sentReferralConfirmation({
       message: "Referral email sent successfully",
     };
   } catch (error) {
-    console.error("Error sending referral email", error);
+    return Response.json(
+      {
+        success: false,
+        message: `Incorrect Email passed: ${error}`,
+      },
+      { status: 402 }
+    );
   }
 }

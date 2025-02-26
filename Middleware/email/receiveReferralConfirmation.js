@@ -5,13 +5,13 @@ export async function receiveReferralConfirmation({
   refereeName,
   courseName,
   refereeEmail,
-  message
+  message,
 }) {
   try {
     const info = await transporter.sendMail({
-      from: '"accredian" <moodyadi30@gmail.com>', 
+      from: '"accredian" <moodyadi30@gmail.com>',
       to: `${refereeEmail}`,
-      subject: "Referral email receive Confirmation", 
+      subject: "Referral email receive Confirmation",
       text: `You have been referred by <strong>${referrerName}</strong> for the <strong>${courseName}</strong> course!`, // plain text body
       html: `
         <!DOCTYPE html>
@@ -44,6 +44,12 @@ export async function receiveReferralConfirmation({
       message: "Referral email sent successfully",
     };
   } catch (error) {
-    console.error("Error sending referral email", error);
+    return Response.json(
+      {
+        success: false,
+        message: `Incorrect Email passed: ${error}`,
+      },
+      { status: 403 }
+    );
   }
 }
